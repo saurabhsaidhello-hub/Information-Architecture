@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>The Invisible Blueprint — Information Architecture for Students</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#0C0C0C;--line:#2A2A2A;--text:#F2F0EB;--muted:#8a8a8a;--dim:#3a3a3a;--accent:#E8E4D9;--green:#4ADE80;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-weight:300;min-height:100vh;-webkit-font-smoothing:antialiased}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px 100px}
+@media(min-width:600px){.wrap{padding:0 40px 100px}}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:.5px solid var(--line);margin-bottom:48px;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+@media(min-width:600px){nav{padding:28px 0;margin-bottom:72px}}
+.mono{font-family:'DM Mono',ui-monospace,monospace}
+.nav-name{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.nav-links{display:flex;gap:16px}
+@media(min-width:600px){.nav-links{gap:28px}}
+.nav-link{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;cursor:pointer;transition:color .2s;background:none;border:none;padding:6px 0}
+.nav-link:hover,.nav-link.active{color:var(--text)}
+.nav-link:focus-visible,.work-item:focus-visible{outline:1px solid var(--green);outline-offset:3px}
+.hero{margin-bottom:48px}
+@media(min-width:600px){.hero{margin-bottom:72px}}
+.hero-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:16px}
+.hero-name{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(44px,12vw,92px);line-height:1.02;margin-bottom:24px;font-weight:400}
+.hero-name em{font-style:italic;color:var(--muted)}
+.hero-bio{font-size:15px;line-height:1.85;color:var(--muted);margin-bottom:24px}
+@media(min-width:600px){.hero-bio{font-size:16px;max-width:580px}}
+.hero-status{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:10px;color:var(--green);letter-spacing:.06em;text-transform:uppercase}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@media(prefers-reduced-motion:reduce){.dot{animation:none}}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border:.5px solid var(--line);border-radius:2px;margin-bottom:48px;overflow:hidden}
+.stat{padding:16px 12px;border-right:.5px solid var(--line)}
+@media(min-width:600px){.stat{padding:24px 20px}}
+.stat:last-child{border-right:none}
+.stat-num{font-family:'DM Serif Display',serif;font-size:34px;line-height:1}
+.stat-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.section{display:none}.section.active{display:block}
+.sec-head{display:flex;align-items:center;gap:12px;margin:48px 0 24px}
+.section>.sec-head:first-child{margin-top:0}
+.sec-tag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:.5px solid var(--line);padding:5px 12px;border-radius:40px;white-space:nowrap}
+.sec-line{flex:1;height:.5px;background:var(--line)}
+p.t,.about-text{font-size:14px;line-height:1.9;color:var(--muted);margin-bottom:20px}
+@media(min-width:600px){p.t,.about-text{font-size:15px}}
+.about-text strong,p.t strong{color:var(--accent);font-weight:400}
+.pull{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(22px,4.5vw,30px);line-height:1.3;margin:8px 0 28px}
+.pull em{color:var(--muted)}
+.fig{border:.5px solid var(--line);border-radius:2px;padding:16px;margin:28px 0}
+.fig svg{display:block;width:100%;height:auto}
+.fig .cap{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:12px}
+svg text{font-family:'DM Mono',ui-monospace,monospace;font-size:12px;fill:#F2F0EB}
+.ol{fill:none;stroke:#666;stroke-width:1}
+.work-item{display:flex;align-items:flex-start;padding:18px 0;border-bottom:.5px solid var(--line);cursor:pointer;gap:14px}
+.work-item:first-of-type{border-top:.5px solid var(--line)}
+.work-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);min-width:24px;padding-top:4px}
+.work-main{flex:1;min-width:0}
+.work-title{font-size:16px;color:var(--text);font-weight:400}
+.work-meta{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.work-body{font-size:14px;line-height:1.8;color:var(--muted);display:none;padding-top:12px;border-top:.5px solid var(--line);margin-top:12px}
+.work-item.open .work-body{display:block}
+.work-arrow{font-family:'DM Mono',monospace;font-size:20px;color:var(--dim);transition:transform .25s,color .2s;line-height:1}
+.work-item:hover .work-arrow,.work-item.open .work-arrow{color:var(--text)}
+.work-item.open .work-arrow{transform:rotate(45deg)}
+.skills-list{display:flex;flex-wrap:wrap;gap:8px}
+.skill-tag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.05em;text-transform:uppercase;padding:7px 12px;border:.5px solid var(--dim);border-radius:2px;color:var(--muted)}
+.skill-tag.bad{text-decoration:line-through;text-decoration-color:var(--dim)}
+.edu-block{padding:18px 0;border-bottom:.5px solid var(--line)}
+.edu-block:first-of-type{border-top:.5px solid var(--line)}
+.edu-name{font-size:15px}
+.edu-sub{font-size:13px;line-height:1.7;color:var(--muted);margin-top:6px}
+.mid{text-anchor:middle}
+.code{font-family:'DM Mono',ui-monospace,monospace;font-size:11px;line-height:1.7;color:var(--accent);border:.5px solid var(--line);padding:14px;margin:0 0 20px;overflow-x:auto;white-space:pre}
+.pill{display:inline-block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;padding:8px 18px;border:.5px solid var(--line);border-radius:40px;color:var(--muted);text-decoration:none;transition:all .2s}
+.pill:hover{border-color:var(--text);color:var(--text)}
+.sm{font-size:10px!important}
+.footer{margin-top:72px;padding-top:24px;border-top:.5px solid var(--line)}
+.footer-name{font-family:'DM Serif Display',serif;font-size:22px;font-style:italic;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <span class="nav-name">IA</span>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showSection('basics',this)">Basics</button>
+    <button class="nav-link" onclick="showSection('method',this)">Method</button>
+    <button class="nav-link" onclick="showSection('examples',this)">Examples</button>
+    <button class="nav-link" onclick="showSection('tips',this)">Tips</button>
+    <button class="nav-link" onclick="showSection('practice',this)">Practice</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-label">Information Architecture</div>
+  <h1 class="hero-name">The Invisible<br><em>Blueprint</em></h1>
+  <p class="hero-bio">Imagine walking into a supermarket where nothing is organized. Shampoo sits next to fresh fish, bread hides behind the batteries, and there are no signs. You'd leave frustrated, probably without what you came for.</p>
+  <p class="hero-bio">Now think of the last time you used Instagram, Spotify, or Google Maps. You probably found what you wanted without thinking about it. That's not luck. Someone designed that experience, and the discipline behind it is called <strong style="color:var(--accent);font-weight:400">Information Architecture (IA)</strong>.</p>
+</div>
+
+<div id="basics" class="section active">
+  <div class="sec-head"><span class="sec-tag">( What is it )</span><div class="sec-line"></div></div>
+  <p class="pull">Information architecture is the art and science of organizing, labeling, and structuring information so people can <em>find what they need and know where they are.</em></p>
+  <p class="t">If an app is a building, visual design is the paint and furniture. IA is the <strong>floor plan</strong>: the rooms, the hallways, and the signs on the doors.</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 640 210" role="img" aria-label="Left: items scattered randomly on shelves. Right: the same items grouped by tone on labeled shelves.">
+      <text x="20" y="16" style="fill:#8a8a8a">MESSY</text><text x="350" y="16" style="fill:#8a8a8a">ORGANIZED</text>
+      <rect class="ol" x="20" y="28" width="270" height="164"/>
+      <g>
+      <rect x="34" y="42" width="30" height="30" fill="#666"/><rect x="82" y="46" width="30" height="30" fill="#4ADE80"/><rect x="130" y="40" width="30" height="30" fill="#E8E4D9"/><rect x="190" y="44" width="30" height="30" fill="#4ADE80"/><rect x="238" y="42" width="30" height="30" fill="#666"/>
+      <rect x="40" y="92" width="30" height="30" fill="#E8E4D9"/><rect x="100" y="96" width="30" height="30" fill="#666"/><rect x="150" y="90" width="30" height="30" fill="#4ADE80"/><rect x="210" y="94" width="30" height="30" fill="#E8E4D9"/><rect x="250" y="96" width="30" height="30" fill="#4ADE80"/>
+      <rect x="34" y="142" width="30" height="30" fill="#4ADE80"/><rect x="84" y="146" width="30" height="30" fill="#E8E4D9"/><rect x="140" y="142" width="30" height="30" fill="#666"/><rect x="196" y="146" width="30" height="30" fill="#4ADE80"/><rect x="244" y="142" width="30" height="30" fill="#666"/>
+      </g>
+      <rect class="ol" x="350" y="28" width="270" height="164"/>
+      <g>
+      <rect x="430" y="42" width="30" height="30" fill="#4ADE80"/><rect x="470" y="42" width="30" height="30" fill="#4ADE80"/><rect x="510" y="42" width="30" height="30" fill="#4ADE80"/><rect x="550" y="42" width="30" height="30" fill="#4ADE80"/>
+      <rect x="430" y="92" width="30" height="30" fill="#E8E4D9"/><rect x="470" y="92" width="30" height="30" fill="#E8E4D9"/><rect x="510" y="92" width="30" height="30" fill="#E8E4D9"/><rect x="550" y="92" width="30" height="30" fill="#E8E4D9"/>
+      <rect x="430" y="142" width="30" height="30" fill="#666"/><rect x="470" y="142" width="30" height="30" fill="#666"/><rect x="510" y="142" width="30" height="30" fill="#666"/><rect x="550" y="142" width="30" height="30" fill="#666"/>
+      </g>
+      <text x="362" y="62">Snacks</text><text x="362" y="112">Drinks</text><text x="362" y="162">Fruit</text>
+    </svg>
+    <div class="cap">Same items, different organization</div>
+  </div>
+
+  <div class="sec-head"><span class="sec-tag">( Three questions )</span><div class="sec-line"></div></div>
+  <div class="work-item open" onclick="toggleWork(this)" tabindex="0"><div class="work-num">01</div><div class="work-main"><div class="work-title">Where am I?</div><div class="work-body">Titles, highlighted menus, and breadcrumbs tell you your location.</div></div></div>
+  <div class="work-item open" onclick="toggleWork(this)" tabindex="0"><div class="work-num">02</div><div class="work-main"><div class="work-title">What can I do here?</div><div class="work-body">Obvious buttons and logical options show the possible actions.</div></div></div>
+  <div class="work-item open" onclick="toggleWork(this)" tabindex="0"><div class="work-num">03</div><div class="work-main"><div class="work-title">Where can I go next?</div><div class="work-body">Menus and related links point the way forward. If you feel lost, one of these went unanswered.</div></div></div>
+
+  <div class="fig">
+    <svg viewBox="0 0 640 230" role="img" aria-label="A floor plan of an app: Home connected by hallways to Search, Library and Profile, with a you-are-here marker in Home.">
+      <rect class="ol" x="240" y="20" width="160" height="80"/><text x="300" y="66">Home</text>
+      <rect class="ol" x="30" y="130" width="160" height="80"/><text x="86" y="176">Search</text>
+      <rect class="ol" x="240" y="130" width="160" height="80"/><text x="290" y="176">Library</text>
+      <rect class="ol" x="450" y="130" width="160" height="80"/><text x="506" y="176">Profile</text>
+      <path class="ol" d="M320 100V130M240 60H110V130M400 60H530V130" stroke-dasharray="5 5"/>
+      <circle cx="260" cy="40" r="5" fill="#4ADE80"/><text x="272" y="44" style="fill:#4ADE80;font-size:10px">YOU ARE HERE</text>
+    </svg>
+    <div class="cap">Rooms are screens. Hallways are navigation.</div>
+  </div>
+
+  <div class="sec-head"><span class="sec-tag">( Four building blocks )</span><div class="sec-line"></div></div>
+  <div class="work-item" onclick="toggleWork(this)" tabindex="0"><div class="work-num">01</div><div class="work-main"><div class="work-title">Organization</div><div class="work-meta">How things are grouped</div><div class="work-body">Group by topic, date, alphabet, or task. Choose by how people think, not by the company's departments.</div></div><div class="work-arrow">+</div></div>
+  <div class="work-item" onclick="toggleWork(this)" tabindex="0"><div class="work-num">02</div><div class="work-main"><div class="work-title">Labeling</div><div class="work-meta">What things are called</div><div class="work-body">"Products" beats "Our Offerings." Use your users' own words.</div></div><div class="work-arrow">+</div></div>
+  <div class="work-item" onclick="toggleWork(this)" tabindex="0"><div class="work-num">03</div><div class="work-main"><div class="work-title">Navigation</div><div class="work-meta">How people move around</div><div class="work-body">Menus, tabs, and breadcrumbs are the road signs of the digital world.</div></div><div class="work-arrow">+</div></div>
+  <div class="work-item" onclick="toggleWork(this)" tabindex="0"><div class="work-num">04</div><div class="work-main"><div class="work-title">Search</div><div class="work-meta">The shortcut</div><div class="work-body">For people who would rather ask than browse. Good search handles typos and synonyms.</div></div><div class="work-arrow">+</div></div>
+</div>
+
+<div id="method" class="section">
+  <div class="sec-head"><span class="sec-tag">( The cafeteria story )</span><div class="sec-line"></div></div>
+  <p class="t">A messy cafeteria scatters hot food, drinks, and desserts at random. An information architect would <strong>observe</strong> where students get stuck, <strong>group</strong> items into zones, <strong>label</strong> them in plain words, and <strong>test</strong> the result. The food never changed. Only the organization did.</p>
+  <div class="fig">
+    <svg viewBox="0 0 640 190" role="img" aria-label="A cafeteria with four labeled zones and a dashed path from the trays to the cashier.">
+      <rect class="ol" x="20" y="16" width="135" height="66"/><text x="36" y="54">Pizza &amp; Pasta</text>
+      <rect class="ol" x="172" y="16" width="135" height="66"/><text x="216" y="54">Snacks</text>
+      <rect class="ol" x="324" y="16" width="135" height="66"/><text x="370" y="54">Drinks</text>
+      <rect class="ol" x="476" y="16" width="144" height="66"/><text x="524" y="54">Desserts</text>
+      <rect x="20" y="124" width="110" height="44" fill="#E8E4D9"/><text x="48" y="151" style="fill:#0C0C0C">Trays</text>
+      <rect x="510" y="124" width="110" height="44" fill="#4ADE80"/><text x="532" y="151" style="fill:#0C0C0C">Cashier</text>
+      <path class="ol" d="M130 146H504M494 140l10 6-10 6" stroke-dasharray="5 5"/>
+    </svg>
+    <div class="cap">Same food. Clear zones. One path.</div>
+  </div>
+
+  <div class="sec-head"><span class="sec-tag">( How professionals work )</span><div class="sec-line"></div></div>
+  <div class="work-item open" onclick="toggleWork(this)" tabindex="0"><div class="work-num">01</div><div class="work-main"><div class="work-title">Card sorting</div><div class="work-body">People group topic cards in the way that makes sense to them. The patterns reveal how they think.</div></div></div>
+  <div class="work-item open" onclick="toggleWork(this)" tabindex="0"><div class="work-num">02</div><div class="work-main"><div class="work-title">Tree testing</div><div class="work-body">People look for things in a bare menu with no design. If many get lost, fix the structure.</div></div></div>
+  <div class="work-item open" onclick="toggleWork(this)" tabindex="0"><div class="work-num">03</div><div class="work-main"><div class="work-title">Analytics and audits</div><div class="work-body">See what people search for, and take inventory of what content exists.</div></div></div>
+
+  <div class="fig">
+    <svg viewBox="0 0 640 170" role="img" aria-label="Loose topic cards on the left are sorted into three groups on the right.">
+      <rect x="20" y="20" width="96" height="32" fill="#E8E4D9"/><rect x="62" y="64" width="96" height="32" fill="#666"/><rect x="20" y="108" width="96" height="32" fill="#4ADE80"/><rect x="132" y="28" width="96" height="32" fill="#666"/><rect x="140" y="110" width="96" height="32" fill="#E8E4D9"/>
+      <g style="font-size:10px;fill:#0C0C0C"><text x="32" y="40" style="fill:#0C0C0C;font-size:10px">Refunds</text><text x="72" y="84" style="fill:#F2F0EB;font-size:10px">Track order</text><text x="32" y="128" style="fill:#0C0C0C;font-size:10px">Sign in</text><text x="144" y="48" style="fill:#F2F0EB;font-size:10px">Shipping</text><text x="152" y="130" style="fill:#0C0C0C;font-size:10px">Returns</text></g>
+      <path class="ol" d="M262 85h56M308 79l10 6-10 6"/>
+      <rect class="ol" x="350" y="14" width="270" height="44"/><text x="364" y="41">Returns and refunds</text>
+      <rect class="ol" x="350" y="63" width="270" height="44"/><text x="364" y="90">Delivery</text>
+      <rect class="ol" x="350" y="112" width="270" height="44"/><text x="364" y="139">My account</text>
+    </svg>
+    <div class="cap">Card sorting reveals how people group ideas</div>
+  </div>
+
+  <div class="sec-head"><span class="sec-tag">( Common mistakes )</span><div class="sec-line"></div></div>
+  <div class="skills-list">
+    <span class="skill-tag">Mirroring the org chart</span><span class="skill-tag">Deep menus</span><span class="skill-tag">Insider jargon</span><span class="skill-tag">Calling it "done"</span>
+  </div>
+  <p class="t" style="margin-top:20px">IA is a garden, not a statue. It needs regular pruning.</p>
+</div>
+
+<div id="examples" class="section">
+  <p class="pull">Here are four examples of information architecture, all drawn for one imaginary app: <em>Campus Eats</em>, where students order lunch.</p>
+
+  <div class="sec-head"><span class="sec-tag">( 01 Sitemap )</span><div class="sec-line"></div></div>
+  <p class="t">A <strong>sitemap</strong> is a bird's-eye view of every screen in a product and how they are grouped. It is the first thing an information architect draws.</p>
+  <div class="fig">
+    <svg viewBox="0 0 700 210" role="img" aria-label="Sitemap of Campus Eats: Home leads to Menu, Orders and Account. Menu has Meals, Snacks and Drinks. Orders has Cart and History. Account has Profile and Help.">
+      <path class="ol" d="M360 46V66M130 66H590M130 66V86M360 66V86M590 66V86M130 122V140M40 140H208M40 140V162M124 140V162M208 140V162M360 122V140M318 140H402M318 140V162M402 140V162M590 122V140M548 140H632M548 140V162M632 140V162"/>
+      <rect x="300" y="10" width="120" height="36" fill="#4ADE80"/><text class="mid" x="360" y="33" style="fill:#0C0C0C">Home</text>
+      <rect class="ol" x="70" y="86" width="120" height="36"/><text class="mid" x="130" y="109">Menu</text>
+      <rect class="ol" x="300" y="86" width="120" height="36"/><text class="mid" x="360" y="109">Orders</text>
+      <rect class="ol" x="530" y="86" width="120" height="36"/><text class="mid" x="590" y="109">Account</text>
+      <g class="sm"><rect class="ol" x="2" y="162" width="76" height="34"/><text class="mid sm" x="40" y="183">Meals</text>
+      <rect class="ol" x="86" y="162" width="76" height="34"/><text class="mid sm" x="124" y="183">Snacks</text>
+      <rect class="ol" x="170" y="162" width="76" height="34"/><text class="mid sm" x="208" y="183">Drinks</text>
+      <rect class="ol" x="280" y="162" width="76" height="34"/><text class="mid sm" x="318" y="183">Cart</text>
+      <rect class="ol" x="364" y="162" width="76" height="34"/><text class="mid sm" x="402" y="183">History</text>
+      <rect class="ol" x="510" y="162" width="76" height="34"/><text class="mid sm" x="548" y="183">Profile</text>
+      <rect class="ol" x="594" y="162" width="76" height="34"/><text class="mid sm" x="632" y="183">Help</text></g>
+    </svg>
+    <div class="cap">Sitemap: every screen, grouped in levels</div>
+  </div>
+
+  <div class="sec-head"><span class="sec-tag">( 02 User flow )</span><div class="sec-line"></div></div>
+  <p class="t">A <strong>user flow</strong> follows one person completing one task, step by step, including the decisions along the way. It shows where things can go wrong.</p>
+  <div class="fig">
+    <svg viewBox="0 0 700 200" role="img" aria-label="User flow for ordering lunch: Open app, Pick item, Add to cart, then a decision Payment OK. Yes leads to Order placed. No loops back to Add to cart.">
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8a8a8a"/></marker></defs>
+      <rect x="10" y="80" width="100" height="40" rx="20" fill="#E8E4D9"/><text class="mid" x="60" y="105" style="fill:#0C0C0C">Open app</text>
+      <rect class="ol" x="140" y="80" width="100" height="40"/><text class="mid" x="190" y="105">Pick item</text>
+      <rect class="ol" x="270" y="80" width="110" height="40"/><text class="mid" x="325" y="105">Add to cart</text>
+      <path class="ol" d="M470 60L520 100L470 140L420 100Z"/><text class="mid sm" x="470" y="104">Pay OK?</text>
+      <rect x="570" y="80" width="116" height="40" rx="20" fill="#4ADE80"/><text class="mid" x="628" y="105" style="fill:#0C0C0C">Order placed</text>
+      <path class="ol" d="M110 100H138M240 100H268M380 100H418M520 100H568" marker-end="url(#ar)"/>
+      <path class="ol" d="M470 140V176H325V122" marker-end="url(#ar)" stroke-dasharray="5 5"/>
+      <text class="sm" x="534" y="92" style="fill:#4ADE80">Yes</text><text class="sm" x="480" y="168" style="fill:#8a8a8a">No: try again</text>
+    </svg>
+    <div class="cap">User flow: one task, with a decision point</div>
+  </div>
+
+  <div class="sec-head"><span class="sec-tag">( 03 Wireframe )</span><div class="sec-line"></div></div>
+  <p class="t">A <strong>wireframe</strong> is a simple black-and-white layout of one screen. It decides what goes where, with no colors or photos to distract from the structure.</p>
+  <div class="fig">
+    <svg viewBox="0 0 700 360" role="img" aria-label="Wireframe of the Campus Eats home screen with a header, search bar, category chips, item cards and a bottom navigation bar, each annotated.">
+      <rect class="ol" x="250" y="10" width="200" height="340" rx="16"/>
+      <rect class="ol" x="262" y="24" width="176" height="28"/><text x="272" y="43">Campus Eats</text>
+      <rect class="ol" x="262" y="62" width="176" height="26"/><text class="sm" x="272" y="79" style="fill:#8a8a8a">Search food...</text>
+      <rect class="ol" x="262" y="98" width="52" height="20" rx="10"/><text class="mid sm" x="288" y="112">Meals</text>
+      <rect class="ol" x="320" y="98" width="56" height="20" rx="10"/><text class="mid sm" x="348" y="112">Snacks</text>
+      <rect class="ol" x="382" y="98" width="56" height="20" rx="10"/><text class="mid sm" x="410" y="112">Drinks</text>
+      <rect class="ol" x="262" y="130" width="176" height="64"/><rect class="ol" x="270" y="138" width="48" height="48"/><path class="ol" d="M270 138L318 186M318 138L270 186"/><rect x="328" y="146" width="90" height="8" fill="#666"/><rect x="328" y="162" width="60" height="8" fill="#3a3a3a"/><rect x="328" y="176" width="40" height="8" fill="#4ADE80"/>
+      <rect class="ol" x="262" y="204" width="176" height="64"/><rect class="ol" x="270" y="212" width="48" height="48"/><path class="ol" d="M270 212L318 260M318 212L270 260"/><rect x="328" y="220" width="90" height="8" fill="#666"/><rect x="328" y="236" width="60" height="8" fill="#3a3a3a"/><rect x="328" y="250" width="40" height="8" fill="#4ADE80"/>
+      <rect class="ol" x="262" y="300" width="176" height="36"/><text class="mid sm" x="292" y="323">Home</text><text class="mid sm" x="350" y="323">Orders</text><text class="mid sm" x="410" y="323">Account</text>
+      <g style="fill:#8a8a8a"><path class="ol" d="M236 75H262M236 108H262M464 162H438M464 318H438" stroke-dasharray="3 3"/>
+      <text class="sm" text-anchor="end" x="232" y="79">Search is always visible</text>
+      <text class="sm" text-anchor="end" x="232" y="112">Categories as quick filters</text>
+      <text class="sm" x="468" y="166">Cards: photo, name, price</text>
+      <text class="sm" x="468" y="322">Bottom nav: main sections</text></g>
+    </svg>
+    <div class="cap">Wireframe: structure first, style later</div>
+  </div>
+
+  <div class="sec-head"><span class="sec-tag">( 04 Taxonomy )</span><div class="sec-line"></div></div>
+  <p class="t">A <strong>taxonomy</strong> is the agreed system of categories and labels for your content. Categories form a hierarchy, and tags describe attributes that cut across it.</p>
+  <div class="fig">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Taxonomy: Food splits into Meals, Snacks and Drinks, each with two subcategories. On the right, tags such as Vegan and Spicy describe items. A samosa is Snacks, Savory, Vegan and Spicy.">
+      <path class="ol" d="M100 115H125M125 47V183M125 47H150M125 115H150M125 183H150M260 47H272M272 29V65M272 29H300M272 65H300M260 115H272M272 97V133M272 97H300M272 133H300M260 183H272M272 165V201M272 165H300M272 201H300"/>
+      <rect x="10" y="98" width="90" height="34" fill="#4ADE80"/><text class="mid" x="55" y="120" style="fill:#0C0C0C">Food</text>
+      <rect class="ol" x="150" y="30" width="110" height="34"/><text class="mid" x="205" y="52">Meals</text>
+      <rect class="ol" x="150" y="98" width="110" height="34"/><text class="mid" x="205" y="120">Snacks</text>
+      <rect class="ol" x="150" y="166" width="110" height="34"/><text class="mid" x="205" y="188">Drinks</text>
+      <g><rect class="ol" x="300" y="15" width="90" height="28"/><text class="mid sm" x="345" y="33">Veg</text>
+      <rect class="ol" x="300" y="51" width="90" height="28"/><text class="mid sm" x="345" y="69">Non-veg</text>
+      <rect class="ol" x="300" y="83" width="90" height="28"/><text class="mid sm" x="345" y="101">Sweet</text>
+      <rect class="ol" x="300" y="119" width="90" height="28"/><text class="mid sm" x="345" y="137">Savory</text>
+      <rect class="ol" x="300" y="151" width="90" height="28"/><text class="mid sm" x="345" y="169">Hot</text>
+      <rect class="ol" x="300" y="187" width="90" height="28"/><text class="mid sm" x="345" y="205">Cold</text></g>
+      <text class="sm" x="450" y="22" style="fill:#8a8a8a">TAGS DESCRIBE ANY ITEM</text>
+      <rect class="ol" x="450" y="34" width="70" height="24" rx="12"/><text class="mid sm" x="485" y="50">Vegan</text>
+      <rect class="ol" x="530" y="34" width="70" height="24" rx="12"/><text class="mid sm" x="565" y="50">Spicy</text>
+      <rect class="ol" x="450" y="66" width="100" height="24" rx="12"/><text class="mid sm" x="500" y="82">Gluten-free</text>
+      <rect class="ol" x="560" y="66" width="110" height="24" rx="12"/><text class="mid sm" x="615" y="82">Under ₹100</text>
+      <text class="sm" x="450" y="140" style="fill:#4ADE80">Example: Samosa</text>
+      <text class="sm" x="450" y="160">Category: Snacks &gt; Savory</text>
+      <text class="sm" x="450" y="178">Tags: Vegan, Spicy, Under ₹100</text>
+    </svg>
+    <div class="cap">Taxonomy: categories for browsing, tags for filtering</div>
+  </div>
+</div>
+
+<div id="tips" class="section">
+  <p class="pull">Good IA has to survive every screen size. These practices keep one structure working from <em>desktop to phone.</em></p>
+
+  <div class="fig">
+    <svg viewBox="0 0 700 240" role="img" aria-label="The same page on desktop, tablet and phone. Desktop shows a full menu and three columns, tablet shows two columns, and phone shows a hamburger menu and one column. The most important card stays first on every screen.">
+      <rect class="ol" x="10" y="10" width="300" height="200"/>
+      <rect x="22" y="20" width="40" height="14" fill="#E8E4D9"/><rect class="ol" x="180" y="22" width="26" height="10"/><rect class="ol" x="214" y="22" width="26" height="10"/><rect class="ol" x="248" y="22" width="26" height="10"/>
+      <rect x="22" y="50" width="88" height="60" fill="#4ADE80"/><rect class="ol" x="118" y="50" width="88" height="60"/><rect class="ol" x="214" y="50" width="88" height="60"/>
+      <rect class="ol" x="22" y="120" width="88" height="60"/><rect class="ol" x="118" y="120" width="88" height="60"/><rect class="ol" x="214" y="120" width="88" height="60"/>
+      <rect class="ol" x="330" y="40" width="170" height="170"/>
+      <rect x="342" y="50" width="34" height="12" fill="#E8E4D9"/><rect class="ol" x="410" y="52" width="22" height="8"/><rect class="ol" x="438" y="52" width="22" height="8"/><rect class="ol" x="466" y="52" width="22" height="8"/>
+      <rect x="342" y="78" width="68" height="50" fill="#4ADE80"/><rect class="ol" x="420" y="78" width="68" height="50"/><rect class="ol" x="342" y="138" width="68" height="50"/><rect class="ol" x="420" y="138" width="68" height="50"/>
+      <rect class="ol" x="560" y="20" width="110" height="190" rx="14"/>
+      <rect x="574" y="34" width="34" height="12" fill="#E8E4D9"/><path class="ol" d="M638 34h20M638 40h20M638 46h20"/>
+      <rect x="574" y="62" width="82" height="42" fill="#4ADE80"/><rect class="ol" x="574" y="112" width="82" height="42"/><rect class="ol" x="574" y="162" width="82" height="36"/>
+      <text class="mid sm" x="160" y="232" style="fill:#8a8a8a">DESKTOP: full menu, 3 columns</text>
+      <text class="mid sm" x="415" y="232" style="fill:#8a8a8a">TABLET: 2 columns</text>
+      <text class="mid sm" x="615" y="232" style="fill:#8a8a8a">PHONE: 1 column</text>
+    </svg>
+    <div class="cap">Same content and same priority order on every screen</div>
+  </div>
+
+  <div class="sec-head"><span class="sec-tag">( Best practices )</span><div class="sec-line"></div></div>
+  <div class="work-item open" onclick="toggleWork(this)" tabindex="0"><div class="work-num">01</div><div class="work-main"><div class="work-title">Keep one structure everywhere</div><div class="work-body">Don't build a separate mobile site. Keep a single content structure and let the layout adapt. You update content once, and every device shows the change.</div></div></div>
+  <div class="work-item open" onclick="toggleWork(this)" tabindex="0"><div class="work-num">02</div><div class="work-main"><div class="work-title">Put the essentials first</div><div class="work-body">Decide what matters most and keep it at the top on small screens. A restaurant site, for example, leads with location, opening hours and a booking button, and puts the full menu below.</div></div></div>
+  <div class="work-item open" onclick="toggleWork(this)" tabindex="0"><div class="work-num">03</div><div class="work-main"><div class="work-title">Simplify navigation on small screens</div><div class="work-body">Collapse long menus into a hamburger, an accordion or tabs, but keep the same labels and the same order. Build menus from real lists so screen readers understand them.</div></div></div>
+  <div class="work-item open" onclick="toggleWork(this)" tabindex="0"><div class="work-num">04</div><div class="work-main"><div class="work-title">Use flexible grids, not fixed widths</div><div class="work-body">Let columns grow, shrink and wrap with the screen. This one rule gives you many columns on a desktop and a single column on a phone.</div></div></div>
+  <div class="code">.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:16px;
+}</div>
+  <div class="work-item open" onclick="toggleWork(this)" tabindex="0"><div class="work-num">05</div><div class="work-main"><div class="work-title">Make images and text fluid</div><div class="work-body">Cap image width at 100% of its container so nothing overflows, and let font sizes scale between a minimum and a maximum so text stays readable.</div></div></div>
+  <div class="code">img{max-width:100%;height:auto}
+h1{font-size:clamp(1.5rem,5vw,3rem)}</div>
+  <div class="work-item open" onclick="toggleWork(this)" tabindex="0"><div class="work-num">06</div><div class="work-main"><div class="work-title">Start small, then scale up</div><div class="work-body">Design the phone layout first, then add space and columns for bigger screens. This forces you to rank your content, which is the heart of IA.</div></div></div>
+  <div class="work-item open" onclick="toggleWork(this)" tabindex="0"><div class="work-num">07</div><div class="work-main"><div class="work-title">Use semantic HTML</div><div class="work-body">Real headings, lists and landmarks let assistive technology read the structure you designed. Good IA should be understood by machines too.</div></div></div>
+  <div class="work-item open" onclick="toggleWork(this)" tabindex="0"><div class="work-num">08</div><div class="work-main"><div class="work-title">Test on real devices</div><div class="work-body">Use browser developer tools and, when you can, real phones. Look for tiny text, hard-to-tap buttons, cluttered layouts and heavy images that load slowly.</div></div></div>
+
+  <div class="sec-head"><span class="sec-tag">( Source )</span><div class="sec-line"></div></div>
+  <p class="t">These tips are adapted and summarized from Figma's guide to responsive website design.</p>
+  <a class="pill" href="https://www.figma.com/resource-library/responsive-website-design/" target="_blank" rel="noopener">Read the full guide ↗</a>
+</div>
+
+<div id="practice" class="section">
+  <div class="sec-head"><span class="sec-tag">( Try it yourself )</span><div class="sec-line"></div></div>
+  <div class="edu-block"><div class="edu-name">01 — The Junk Drawer Challenge</div><div class="edu-sub">Sort 20 random items into groups, then compare with a classmate. Did you group them the same way?</div></div>
+  <div class="edu-block"><div class="edu-name">02 — Menu Detective</div><div class="edu-sub">Map a favorite app's main menu on paper. What is the logic? What would you change?</div></div>
+  <div class="edu-block"><div class="edu-name">03 — Label Swap</div><div class="edu-sub">Rename five confusing buttons from a website you dislike. Ask a friend which versions they prefer.</div></div>
+
+  <div class="sec-head"><span class="sec-tag">( The big idea )</span><div class="sec-line"></div></div>
+  <p class="pull">IA is about empathy: <em>how does this person think, and how can I make their path clear?</em></p>
+  <p class="t">The next time you feel lost on a website, don't blame yourself. You have spotted a gap in the blueprint.</p>
+</div>
+
+<div class="footer"><div class="footer-name">Now go fix the blueprint.</div></div>
+</div>
+<script>
+function showSection(id,btn){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.querySelectorAll('.nav-link').forEach(function(b){b.classList.remove('active')});
+  document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo(0,0);
+}
+function toggleWork(el){el.classList.toggle('open')}
+document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('work-item')){e.preventDefault();toggleWork(e.target)}});
+</script>
+</body>
+</html>
